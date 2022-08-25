@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="davyr.css">
+    <title>DAVYR</title>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="davyrApp.js"></script>
+  <script src="mirdCtrl.js"></script>
+  <script src="bsaCtrl.js"></script>
+  <script src="partitionCtrl.js"></script>
+  <script src="parameterFunctions.js"></script>
+  <script src="parametersCtrl.js"></script>
+  <body>
+    <div ng-app="davyrApp">
+      <p>DAVYR™ v1.0.0</p>
+      <div class="row">
+        <div class="summary">
+          <div ng-controller="mirdCtrl">
+            <table class="mird summary" id="mirdTable">
+              <tr>
+                <th class="summaryCell mird" id="mirdTh">MIRD</th>
+                <th class="summaryCell">Dose (Gy)</th>
+                <th class="summaryCell">Activity (GBq)</th>
+              </tr>
+              <tr>
+                <td class="summaryCell">Tumor</td>
+                <td class="summaryCell">{{mirdTumorDose()}}</td>
+                <td class="summaryCell">{{mirdTumorActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Liver</td>
+                <td class="summaryCell">{{mirdLiverDose()}}</td>
+                <td class="summaryCell">{{mirdLiverActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Lung</td>
+                <td class="summaryCell">{{mirdLungDose()}}</td>
+                <td class="summaryCell">{{mirdLungActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Total</td>
+                <td class="totalDose" id="mirdTotalDose"></td>
+                <td class="mird summaryCell" id="mirdTotalActivity">{{mirdTotalActivity()}}</td>
+              </tr>
+            </table>
+          </div>
+          <div ng-controller="bsaCtrl">
+            <table class="bsa summary" id="bsaTable">
+              <tr>
+                <th class="summaryCell bsa" id="bsaTh">BSA</th>
+                <th class="summaryCell">Dose (Gy)</th>
+                <th class="summaryCell">Activity (GBq)</th>
+              </tr>
+              <tr>
+                <td class="summaryCell">Tumor</td>
+                <td class="summaryCell">{{bsaTumorDose()}}</td>
+                <td class="summaryCell">{{bsaTumorActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Liver</td>
+                <td class="summaryCell">{{bsaLiverDose()}}</td>
+                <td class="summaryCell">{{bsaLiverActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Lung</td>
+                <td class="summaryCell">{{bsaLungDose()}}</td>
+                <td class="summaryCell">{{bsaLungActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Total</td>
+                <td class="totalDose" id="bsaTotalDose"></td>
+                <td class="bsa summaryCell" id="bsaTotalActivity">{{bsaTotalActivity()}}</td>
+              </tr>
+            </table>
+          </div>
+          <div ng-controller="partitionCtrl">
+            <table class="partition summary" id="partitionTable">
+              <tr>
+                <th class="summaryCell partition" id="partitionTh">Partition</th>
+                <th class="summaryCell">Dose (Gy)</th>
+                <th class="summaryCell">Activity (GBq)</th>
+              </tr>
+              <tr>
+                <td class="summaryCell">Tumor</td>
+                <td class="summaryCell">{{partitionTumorDose()}}</td>
+                <td class="summaryCell">{{partitionTumorActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Liver</td>
+                <td class="summaryCell">{{partitionLiverDose()}}</td>
+                <td class="summaryCell">{{partitionLiverActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Lung</td>
+                <td class="summaryCell">{{partitionLungDose()}}</td>
+                <td class="summaryCell">{{partitionLungActivity()}}</td>
+              </tr>
+              <tr>
+                <td class="summaryCell">Total</td>
+                <td class="totalDose" id="partitionTotalDose"></td>
+                <td class="partition summaryCell" id="partitionTotalActivity">{{partitionTotalActivity()}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div ng-controller="parametersCtrl" class="params">
+          <div class="rows">
+            <div class="columns">
+              <div class="parameters">
+                <form class="columns">
+                  <div class="paramButton" id="heightButton">
+                    <input type="radio" id="height" name="parameters" ng-model="parameter" value="height" ng-change="setSlider(parameter)">
+                    <label class="heading" for="height">Height</label><br>
+                    <form class="rows">
+                      <label for="height" ng-dblclick="displayInputForm()">{{height}}</label>
+                      <input type="radio" id="cms" name="parameters" ng-model="heightUnits" value="centimeters" ng-change="setHeightUnits(heightUnits)">
+                      <label class="units"for="cms">cm</label>
+                      <input type="radio" id="ins" name="parameters" ng-model="heightUnits" value="inches" ng-change="setHeightUnits(heightUnits)">
+                      <label class="units"for="ins">in.</label>
+                    </form>
+                  </div>
+                  <div class="paramButton" id="weightButton">
+                    <input type="radio" id="weight" name="parameters" ng-model="parameter" value="weight" ng-change="setSlider(parameter)">
+                    <label class="heading" for="weight">Weight</label><br>
+                    <form class="rows">
+                      <label for="weight" ng-dblclick="displayInputForm()">{{weight}}</label>
+                      <input type="radio" id="kgs" name="parameters" ng-model="weightUnits" value="kilograms" ng-change="setWeightUnits(weightUnits)">
+                      <label class="units"for="kgs">kg</label>
+                      <input type="radio" id="lbs" name="parameters" ng-model="weightUnits" value="pounds" ng-change="setWeightUnits(weightUnits)">
+                      <label class="units"for="lbs">Lb.</label>
+                    </form>
+                  </div>
+                  <div class="paramButton" id="liverVolumeButton">
+                    <input type="radio" id="liverVolume" name="parameters" ng-model="parameter" value="liverVolume" ng-change="setSlider(parameter)">
+                    <label class="heading" for="liverVolume">Liver Volume</label><br>
+                    <label for="liverVolume" ng-dblclick="displayInputForm()">{{totalLiverVolume}} ml</label><br>
+                  </div>
+                  <div class="paramButton" id="treatmentAreaVolumeButton">
+                    <input type="radio" id="treatmentAreaVolume" name="parameters" ng-model="parameter" value="treatmentAreaVolume" ng-change="setSlider(parameter)">
+                    <label class="heading" for="treatmentAreaVolume">Treatment Area Volume</label><br>
+                    <label for="treatmentAreaVolume" ng-dblclick="displayInputForm()">{{totalTreatmentAreaVolume}} ml</label><br>
+                  </div>
+                  <div class="paramButton" id="tumorVolumeInTreatmentAreaButton">
+                    <input type="radio" id="tumorVolumeInTreatmentArea" name="parameters" ng-model="parameter" value="tumorVolumeInTreatmentArea" ng-change="setSlider(parameter)">
+                    <label class="heading" for="tumorVolumeInTreatmentArea">Tumor Vol. Treatment Area</label><br>
+                    <label for="tumorVolumeInTreatmentArea" ng-dblclick="displayInputForm()">{{totalTumorVolumeInTreatmentArea}} ml</label><br>
+                  </div>
+                  <div class="paramButton" id="lungShuntPercentButton">
+                    <input type="radio" id="lungShuntPercent" name="parameters" ng-model="parameter" value="lungShuntPercent" ng-change="setSlider(parameter)">
+                    <label class="heading" for="lungShuntPercent">Lung Shunt %</label><br>
+                    <label for="lungShuntPercent" ng-dblclick="displayInputForm()">{{lungShuntPercent}} ml</label><br>
+                  </div>
+                  <div class="paramButton" id="lungVolumeButton">
+                    <input type="radio" id="lungVolume" name="parameters" ng-model="parameter" value="lungVolume" ng-change="setSlider(parameter)">
+                    <label class="heading" for="lungVolume">Lung Volume</label><br>
+                    <label for="lungVolume" ng-dblclick="displayInputForm()">{{lungVolume}} ml</label><br>
+                  </div>
+                  <div class="paramButton" id="tnRatioButton">
+                    <input type="radio" id="tnRatio" name="parameters" ng-model="parameter" value="tnRatio" ng-change="setSlider(parameter)">
+                    <label class="heading" for="tnRatio">T:N Ratio</label><br>
+                    <label for="tnRatio" ng-dblclick="displayInputForm()">{{tnRatio}}</label><br>
+                  </div>
+                  <div class="paramButton" id="targetDoseMirdButton">
+                    <input type="radio" id="targetDoseMird" name="parameters" ng-model="parameter" value="targetDoseMird" ng-change="setSlider(parameter)">
+                    <label class="heading" for="targetDoseMird">Target Dose(MIRD)</label><br>
+                    <label for="targetDoseMird" ng-dblclick="displayInputForm()">{{targetDoseMird}}</label><br>
+                  </div>
+                  <div class="paramButton" id="targetTumorDosePartitionButton">
+                    <input type="radio" id="targetTumorDosePartition" name="parameters" ng-model="parameter" value="targetTumorDosePartition" ng-change="setSlider(parameter)">
+                    <label class="heading" for="targetTumorDosePartition">Target Tumor Dose(Partition)</label><br>
+                    <label for="targetTumorDosePartition" ng-dblclick="displayInputForm()">{{targetTumorDosePartition}}</label><br>
+                  </div>
+                </form>
+              </div>
+              <div class="buttons">
+                <label class="switch">
+                  <input type="checkbox" ng-click="radSeg()">
+                  <span class="slider" id="radSeg">RAD SEG</span>
+                </label>
+                <button class=""="button reset" ng-click="reset()"></button>
+              </div>
+            </div>
+            <div class="slidecontainer columns">
+              <button class="sliderButton plus" ng-click="sliderPlus()"></button>
+              <input type="range" step="0.1" orient="vertical" id="parameterSlide" ng-model="parameterSlider" ng-change="onParameterSlideChange()" />
+              <button class="sliderButton minus" ng-click="sliderMinus()"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
